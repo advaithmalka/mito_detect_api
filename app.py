@@ -8,7 +8,7 @@ import segmentation_models_pytorch as smp
 from flask_cors import CORS
 
 
-MODEL_PATH = 'models/best_model_checkpoint.pt'
+MODEL_PATH = 'models/best_model_checkpoint_quantized.pt'
 
 app = Flask(__name__)
 CORS(app, resources={r"/predict": {"origins": ["http://localhost:3000", "https://advaithmalka.github.io/cop-classifier/"]}})
@@ -45,9 +45,8 @@ def create_model():
     )
     
     # Load model weights
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=device, weights_only=False))
     model = model.to(device)
-    model = torch.compile(model)  # Optimizes memory & speed
     model.eval()
     
     return model
