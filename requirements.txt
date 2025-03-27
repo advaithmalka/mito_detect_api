@@ -5,4 +5,5 @@ pillow
 numpy
 opencv-python
 flask_cors
+gunicorn
 segmentation_models_pytorch
