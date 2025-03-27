@@ -1,0 +1,8 @@
+flask
+torch
+torchvision
+pillow
+numpy
+opencv-python
+flask_cors
+segmentation_models_pytorch
