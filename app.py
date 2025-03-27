@@ -47,6 +47,7 @@ def create_model():
     # Load model weights
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     model = model.to(device)
+    model = torch.compile(model)  # Optimizes memory & speed
     model.eval()
     
     return model
