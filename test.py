@@ -8,5 +8,10 @@ model = smp.Unet(
         classes=1,                      # model output channels (1 for binary segmentation)
     )
 model.load_state_dict(torch.load("./models/best_model_checkpoint.pt", map_location="cpu"))
-model.half()
-torch.save(model.state_dict(), "./models/best_model_checkpoint_quantized.pt")
+
+# Apply dynamic quantization
+model_quantized = torch.quantization.quantize_dynamic(
+    model, {torch.nn.Linear}, dtype=torch.qint8
+)
+
+torch.save(model_quantized.state_dict(), "./models/best_model_checkpoint_quantized.pt")
